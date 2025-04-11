@@ -1,3 +1,8 @@
 <!-- Page for user that logged in as non-admin -->
-<h1>Welcome, <%= name %></h1>
+<h1>Welcome, <%= name %> </h1>
 <h2>Your username is: <%= username %></h2>
+<h2>Your role is: <%= role %></h2>
+
+<form action="/logout" method="POST">
+    <button type="submit">Logout</button>
+</form>

@@ -1,2 +1,40 @@
 <!-- Page for user that logged in as admin -->
 <h1>This is admin</h1>
+<form action="/logout" method="POST">
+    <button type="submit">Logout</button>
+</form>
+
+ <!-- User management panel -->
+<table>
+  <tr>
+    <th>Username</th>
+    <th>Role</th>
+    <th>Login</th>
+    <th>Expire</th>
+    <th>Actions</th>
+  </tr>
+
+  <% sessions.forEach(s => { %>
+    <tr>
+      <td><%= s.userId.username %></td>
+      <td><%= s.userId.role %></td>
+      <td><%= s.loggedInAt.toLocaleString() %></td>
+      <td><%= s.expiresAt.toLocaleString() %></td>
+      <td>
+        <form method="POST" action="/admin/toggle-role" style="display:inline;">
+          <input type="hidden" name="userId" value="<%= s.userId._id %>">
+          <input type="hidden" name="currentRole" value="<%= s.userId.role %>">
+          <button type="submit">
+            <%= s.userId.role === 'admin' ? 'Demote' : 'Promote' %>
+          </button>
+        </form>
+
+        <form method="POST" action="/admin/terminate" style="display:inline;">
+          <input type="hidden" name="sessionId" value="<%= s._id %>">
+          <button type="submit" style="background:red;color:white;">Terminate</button>
+        </form>
+      </td>
+    </tr>
+  <% }) %>
+
+
